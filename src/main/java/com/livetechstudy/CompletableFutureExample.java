@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 public class CompletableFutureExample {
 	private static final Logger logger = LoggerFactory.getLogger(CompletableFutureExample.class);
 
-	public static void main(String[] args) throws InterruptedException, ExecutionException {
+	public static void main(String[] args){
 		logger.info("Main Started");
 		Shop s = new Shop();
 		ExecutorService es = Executors.newCachedThreadPool();
@@ -23,7 +23,12 @@ public class CompletableFutureExample {
 			}
 		});
 		someOtherWork();
-		logger.info(quotedPrice.get().toString());//This is blocking
+		try {
+			logger.info(quotedPrice.get().toString());//This is blocking
+		} catch (InterruptedException | ExecutionException e) {
+			e.printStackTrace();
+		}
+		es.shutdown();
 	}
 
 	private static void someOtherWork() {
@@ -47,7 +52,7 @@ class Shop {
 
 	private QuotedPricePrice calculatePrice(String product) {
 		delay();
-		return new QuotedPricePrice(product, product.length() * 100);
+		return new QuotedPricePrice(product, product.length()*100);
 	}
 
 	private void delay() {
