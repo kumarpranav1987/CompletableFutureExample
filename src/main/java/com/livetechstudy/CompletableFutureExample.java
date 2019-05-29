@@ -10,9 +10,7 @@ public class CompletableFutureExample {
 
 	public static void main(String[] args) throws InterruptedException, ExecutionException {
 		logger.info("Main Started");
-		Shop s = new Shop();
-		logger.info(s.getPrice("XYZ").toString());
-		someOtherWork();
+		
 	}
 
 	private static void someOtherWork() {
